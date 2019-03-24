@@ -18,7 +18,7 @@ router.post('/login', async function(req, res, next){
 });
 
 router.get('/profile', authMiddleware,function(req, res, next) {
-  res.send({"message" :  `your profile id : ${res.userId}`});
+  res.send({"message" :  `your profile id : ${req.user._id}`});
 });
 
 module.exports = router;

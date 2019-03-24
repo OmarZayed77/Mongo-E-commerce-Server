@@ -5,6 +5,12 @@ const usersDB = require('../DAL/users');
 const productsDB = require('../DAL/products');
 const authMiddleware = require('../middlewares/authentication');
 
+router.post('/', async (req, res, next)=> {
+    const user = await usersDB.add(req.body).catch(console.error);
+    if(!user) next(createError(400, 'missing inserted data'));
+    else res.send( "user added with id: " + user._id);
+});
+
 router.use(authMiddleware);
 
 router.get('/', async (req, res, next)=> {
@@ -13,11 +19,6 @@ router.get('/', async (req, res, next)=> {
    else res.send(users); 
 });
 
-router.post('/', async (req, res, next)=> {
-    const user = await usersDB.add(req.body).catch(console.error);
-    if(!user) next(createError(400, 'missing inserted data'));
-    else res.send( "user added with id: " + user._id);
-});
 
 router.get('/:userId', async (req, res, next)=> {
     const user = await usersDB.getById(req.params.userId).catch(console.error);
@@ -38,6 +39,7 @@ router.delete('/:id', async (req, res)=> {
 });
 
 router.patch('/:id', async (req, res, next)=> {
+    if(req.user._id.toHexString() !== req.params.id) return next(createError(401));
     const user = await usersDB.patch(req.params.id, req.body).catch(console.error);
     if(!user) next(createError(400));
     else res.send('user with id: ' + user._id + "was updated successfully");
