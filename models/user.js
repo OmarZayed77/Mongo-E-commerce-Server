@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
 const salt = 10;
-const secretKey= "Omar";
+const secretKey= process.env.SECRET_KEY || "Omar";
 
 const signToken = promisify(jwt.sign);
 const verifyToken = promisify(jwt.verify);
