@@ -3,6 +3,7 @@ const mongoose = require('../DBL/mongoose');
 
 const productSchema = new mongoose.Schema({
     name: {type: String, required: true},
+    picture: String,
     categoryId: String,
     addedBy: {type: String, required: true},
     isOnSale: {type: Boolean, required: true},
