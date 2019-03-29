@@ -40,7 +40,7 @@ router.use(authMiddleware);
 router.post('/', async (req, res, next)=> {
     const product = await productsDB.add(req.body).catch(console.error);
     if(!product) next(createError(400, 'missing inserted data'));
-    else res.send( "product added with id: " + product._id);
+    else res.send(product);
 });
 router.delete('/:id', async (req, res)=> {
     const product = await productsDB.delete(req.params.id).catch(console.error);
