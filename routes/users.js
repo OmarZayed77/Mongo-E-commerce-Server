@@ -7,7 +7,7 @@ const authMiddleware = require('../middlewares/authentication');
 
 router.post('/', async (req, res, next)=> {
     const user = await usersDB.add(req.body).catch(console.error);
-    if(!user) next(createError(400, 'missing inserted data'));
+    if(!user) next(createError(400));
     else res.send( "user added with id: " + user._id);
 });
 
