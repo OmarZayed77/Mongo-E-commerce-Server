@@ -13,7 +13,7 @@ router.post('/login', async function(req, res, next){
   const user = await User.findOne({"userName": req.body.userName}).catch(console.error);
   if(!user) return next(createError(401 , 'Authentication Failed'));
   debugger; 
-  if(await user.verifyPassword(req.body.password).catch(console.error)) res.send({token: await user.generateToken().catch(console.error) });
+  if(await user.verifyPassword(req.body.password).catch(console.error)) res.send({token: await user.generateToken().catch(console.error), userId: user._id });
   else next(createError(401 , 'Authentication Failed'));
 });
 
