@@ -9,10 +9,10 @@ module.exports = {
     },
     getByCategoryId(categoryId)
     {
-        return Product.find({"categoryId": categoryId})
+        return Product.find({"category": categoryId})
     },
     getCategory(productId){
-        return Product.findById(productId).populate('categoryId');
+        return Product.findById(productId).populate('category').populate('addedBy');
     },
     getByUserId(userId)
     {

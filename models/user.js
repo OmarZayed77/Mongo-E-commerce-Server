@@ -12,8 +12,7 @@ const verifyToken = promisify(jwt.verify);
 
 const userSchema = new mongoose.Schema({
     userName: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
+    password: {type: String, required: true}
 },
 {
     autoIndex: true,
