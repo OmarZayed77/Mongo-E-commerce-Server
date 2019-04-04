@@ -44,10 +44,10 @@ router.post('/', async (req, res, next)=> {
 });
 
 router.delete('/:productId', async (req, res, next)=> {
-    const product = await productsDB.getById(req.params.productId).catch(console.error);
+    let product = await productsDB.getById(req.params.productId).catch(console.error);
     if(!product) return next(createError(404));
     if(req.user._id.toHexString() !== product.addedBy) return next(createError(401));
-    else product =  await productsDB.delete(req.params.id).catch(console.error);
+    else product =  await productsDB.delete(req.params.productId).catch(console.error);
     if(!product) return next(createError(404));
     else res.send("product was deleted successfully");
 });
