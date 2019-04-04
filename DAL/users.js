@@ -8,6 +8,9 @@ module.exports = {
     getById(userId){
         return User.findById(userId);
     },
+    getProducts(userId){
+        return User.findById(userId).populate('products');
+    },
     add(user){
         return User.create(user);
     },

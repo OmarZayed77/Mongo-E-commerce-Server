@@ -27,9 +27,10 @@ router.get('/:userId', async (req, res, next)=> {
 });
 
 router.get('/:userId/products', async (req, res, next)=> {
-    const products = await productsDB.getByUserId(req.params.userId).catch(console.error);
-    if(!products) next(createError(404));
-    else res.send(products);
+    await usersDB.getProducts(req.params.userId).exec((err,response)=>{
+        if(err) next(createError(404));
+        else res.send(response.products);
+    });
 });
 
 router.delete('/:id', async (req, res)=> {

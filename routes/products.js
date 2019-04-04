@@ -14,17 +14,17 @@ router.get('/', async (req, res, next)=> {
 
 
 router.get('/:productId', async (req, res, next)=> {
-    const product = await productsDB.getById(req.params.productId).catch(console.error);
-    if(!product) next(createError(404));
-    else res.send(product);
+    await productsDB.getCategory(req.params.productId).exec((err, response)=>{
+        if(err) next(createError(404));
+        else res.send(response);
+    });
 });
 
 router.get('/:productId/category', async (req, res, next)=> {
-    const product = await productsDB.getById(req.params.productId).catch(console.error);
-    if(!product) return next(createError(404));
-    const category = await categoriesDB.getById(product.categoryId).catch(console.error);
-    if(!category) next(createError(404));
-    else res.send(category);
+    await productsDB.getCategory(req.params.productId).exec((err, response)=>{
+        if(err) next(createError(404));
+        else res.send(response.category);
+    });
 });
 
 router.get('/:productId/user', async (req, res, next)=> {

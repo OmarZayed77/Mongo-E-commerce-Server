@@ -9,6 +9,9 @@ module.exports = {
     getById(categoryId){
         return Category.findById(categoryId);
     },
+    getProducts(categoryId){
+        return Category.findById(categoryId).populate('products');
+    },
     add(category){
         return Category.create(category);
     },

@@ -18,10 +18,11 @@ router.get('/:categoryId', async (req, res, next)=> {
     else res.send(category);
 });
 
-router.get('/:categoryId/products', async (req, res, next)=> {
-    const products = await productsDB.getByCategoryId(req.params.categoryId).catch(console.error);
-    if(!products) next(createError(404));
-    else res.send(products);
+router.get('/:categoryId/products', (req, res, next)=> {
+    categoriesDB.getProducts(req.params.categoryId).exec((err,response)=>{
+        if(err) next(createError(404));
+        else res.send(response.products);
+    })
 });
 
 router.post('/', authMiddleware,async (req, res, next)=> {

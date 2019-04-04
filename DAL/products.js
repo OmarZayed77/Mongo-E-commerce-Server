@@ -11,6 +11,9 @@ module.exports = {
     {
         return Product.find({"categoryId": categoryId})
     },
+    getCategory(productId){
+        return Product.findById(productId).populate('categoryId');
+    },
     getByUserId(userId)
     {
         return Product.find({"addedBy": userId})

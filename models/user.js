@@ -1,4 +1,5 @@
 const mongoose = require('../DBL/mongoose');
+const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
@@ -11,7 +12,8 @@ const verifyToken = promisify(jwt.verify);
 
 const userSchema = new mongoose.Schema({
     userName: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    products: [{type: Schema.Types.ObjectId, ref: 'Product'}]
 },
 {
     autoIndex: true,
