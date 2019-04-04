@@ -42,8 +42,9 @@ router.post('/', async (req, res, next)=> {
     if(!product) next(createError(400, 'missing inserted data'));
     else res.send(product);
 });
-router.delete('/:id', async (req, res)=> {
-    const product = await productsDB.getById(req.params.id).catch(console.error);
+
+router.delete('/:productId', async (req, res, next)=> {
+    const product = await productsDB.getById(req.params.productId).catch(console.error);
     if(!product) return next(createError(404));
     if(req.user._id.toHexString() !== product.addedBy) return next(createError(401));
     else await productsDB.delete(req.params.id).catch(console.error);
