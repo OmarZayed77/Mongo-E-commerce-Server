@@ -46,8 +46,8 @@ router.delete('/:id', async (req, res)=> {
     const product = await productsDB.getById(req.params.id);
     if(!product) return next(createError(404));
     if(req.user._id.toHexString() !== product.addedBy) return next(createError(401));
-    else product = await productsDB.delete(req.params.id).catch(console.error);
-    res.send('product with id: ' + product._id + " was deleted successfully");
+    else await productsDB.delete(req.params.id).catch(console.error);
+    res.send("product was deleted successfully");
 });
 
 router.patch('/:id', async (req, res, next)=> {
